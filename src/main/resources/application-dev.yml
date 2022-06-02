@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    name: h2
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+#      hbm2ddl: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: embedded
+      data-locations: classpath:data-h2.sql
+      platform: h2
+
+hibernate:
+  dialect: org.hibernate.dialect.H2Dialect

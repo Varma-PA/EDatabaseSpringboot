@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: "Simple Employment information spring boot"
+
+  profiles:
+    active: dev
+
