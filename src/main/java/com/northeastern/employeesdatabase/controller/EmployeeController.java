@@ -20,6 +20,12 @@ public class EmployeeController {
         @Autowired
         private EmployeeService employeeService;
 
+        @GetMapping
+        public ModelAndView showHomeScreen(){
+            ModelAndView modelAndView = new ModelAndView("HomeScreen");
+            return modelAndView;
+        }
+
         @GetMapping("/list")
         public ModelAndView showEmployees(){
             ModelAndView modelAndView = new ModelAndView("ListEmployees");
