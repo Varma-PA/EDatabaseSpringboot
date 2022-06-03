@@ -3,11 +3,13 @@ package com.northeastern.employeesdatabase.controller;
 import com.northeastern.employeesdatabase.dto.EmployeeDTO;
 import com.northeastern.employeesdatabase.entities.Employee;
 import com.northeastern.employeesdatabase.services.EmployeeService;
+import com.northeastern.employeesdatabase.services.IPAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -17,11 +19,17 @@ public class EmployeeController {
         @Autowired
         private EmployeeService employeeService;
 
-
+        @Autowired
+        private IPAddressService ipAddressService;
 
         @GetMapping
-        public ModelAndView showHomeScreen(){
+        public ModelAndView showHomeScreen(HttpServletRequest request){
             ModelAndView modelAndView = new ModelAndView("HomeScreen");
+
+            String getClientAddress = ipAddressService.getIPAddressOfServer(request);
+
+            modelAndView.addObject("clientIP", getClientAddress);
+
             return modelAndView;
         }
 
