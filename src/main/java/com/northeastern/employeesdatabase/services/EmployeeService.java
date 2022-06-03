@@ -36,5 +36,19 @@ public class EmployeeService {
         return employeeDao.findAll();
     }
 
+    public Employee getEmployeeById(Integer id){
+        if(employeeDao.findById(id).isPresent()) return employeeDao.findById(id).get();
+        else return null;
+    }
+
+    public Employee updateEmployee(Employee employee){
+        Employee newEmployee = getEmployeeById(employee.getId());
+        return employeeDao.save(employee);
+    }
+
+    public void deleteEmployeeById(Integer employeeId){
+        employeeDao.deleteById(employeeId);
+    }
+
 
 }

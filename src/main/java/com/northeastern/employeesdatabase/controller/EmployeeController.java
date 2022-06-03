@@ -5,10 +5,7 @@ import com.northeastern.employeesdatabase.entities.Employee;
 import com.northeastern.employeesdatabase.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -19,6 +16,8 @@ public class EmployeeController {
 
         @Autowired
         private EmployeeService employeeService;
+
+
 
         @GetMapping
         public ModelAndView showHomeScreen(){
@@ -49,8 +48,39 @@ public class EmployeeController {
 
         @PostMapping("/saveEmployee")
         public String saveEmployee(@ModelAttribute EmployeeDTO employeeDTO){
-            System.out.println(employeeDTO);
             employeeService.createEmployee(employeeDTO);
+            return "redirect:/list";
+        }
+
+        @PostMapping("/saveUpdatedEmployee")
+        public String saveUpdatedEmployee(@ModelAttribute Employee employee){
+
+            employeeService.updateEmployee(employee);
+            return "redirect:/list";
+
+        }
+
+
+        @GetMapping("/showUpdateForm")
+        public ModelAndView showUpdateForm(@RequestParam Integer employeeId){
+            ModelAndView modelAndView = new ModelAndView("UpdateEmployee");
+
+            Employee employee = employeeService.getEmployeeById(employeeId);
+
+//            EmployeeDTO employeeDTO = new EmployeeDTO();
+//
+//            employeeDTO.setEmployeeName(employee.getName());
+//            employeeDTO.setEmployeeDepartment(employee.getDepartment());
+
+            modelAndView.addObject("employee", employee);
+
+            return modelAndView;
+
+        }
+
+        @GetMapping("/deleteEmployee")
+        public String deleteEmployee(@RequestParam Integer employeeId){
+            employeeService.deleteEmployeeById(employeeId);
             return "redirect:/list";
         }
 
